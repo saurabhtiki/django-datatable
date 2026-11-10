@@ -25,6 +25,9 @@
       <button type="button" class="join-item btn btn-sm" :class="level === 'roomy' && 'btn-active btn-primary'" @click="set('roomy')" title="Roomy rows: easier to read">L</button>
     </div>
   {% endif %}
+  {% if table.border_toggle %}
+    <button type="button" x-data="dtBorder" class="btn btn-sm" :class="on ? 'btn-active btn-primary' : 'btn-outline btn-primary'" @click="toggle()" :aria-pressed="on" title="Show or hide the lines between cells">Lines</button>
+  {% endif %}
   {% if table.column_toggle %}
     <div x-data="dtColumns('{{ table.table_id }}')" class="relative" @click.outside="open = false" @keydown.escape.window="open = false">
       <button type="button" class="btn btn-sm btn-outline btn-primary" @click="open = !open" :aria-expanded="open" title="Choose which columns to show">Columns <span x-show="hidden.length" x-cloak class="badge badge-sm badge-primary" x-text="'−' + hidden.length"></span></button>

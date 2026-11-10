@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 
 TEXT, CHOICE, NUMBER, DATE = "text", "choice", "number", "date"
 BLANK = "__blank__"  # tick-list value meaning "the cell is empty"
-PAGE_SIZES = (25, 50, 100, 200)
+PAGE_SIZES = (10, 20, 25, 50, 100, 200)
 CSV_CHUNK = 2000
 # A plain number, or one with thousand separators in Indian (1,00,000) or western (100,000) style.
 NUMBER_PATTERN = re.compile(r"[+-]?(\d+|\d{1,3}(,\d{2})*,\d{3})?(\.\d+)?")
@@ -133,14 +133,16 @@ class DataTable:
         page_sizes=PAGE_SIZES,
         striped=True,
         bordered=False,
-        sticky_header=False,
+        sticky_header=True,
         density_switch=False,
         column_toggle=False,
+        border_toggle=False,
     ):
         # Look and feel (all optional, nothing changes unless you turn it on):
         #   striped / bordered  - alternate row shading, lines around every cell
         #   sticky_header       - column names stay in view while a long table scrolls
         #   density_switch      - Compact / Normal / Roomy buttons (remembered in the browser)
+        #   border_toggle       - a button that turns cell lines on or off (remembered in the browser)
         #   column_toggle       - a "Columns" menu to hide columns (remembered per table)
         #   page_sizes          - the "per page" choices, e.g. (10, 25, 50)
         self.striped = striped
@@ -148,7 +150,10 @@ class DataTable:
         self.sticky_header = sticky_header
         self.density_switch = density_switch
         self.column_toggle = column_toggle
+        self.border_toggle = border_toggle
         self.page_sizes = tuple(page_sizes)
+        if default_per_page is None:
+            default_per_page = 20  # used when the list below has it
         if default_per_page not in self.page_sizes:
             default_per_page = self.page_sizes[0]
         self.params = params

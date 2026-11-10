@@ -24,6 +24,7 @@ const dtLevel = () => {
   return DT_LEVELS.includes(saved) ? saved : "normal";
 };
 document.documentElement.dataset.dtDensity = dtLevel();
+document.documentElement.dataset.dtBorder = dtRead("dt-border", false) === true ? "on" : "off";
 
 document.addEventListener("alpine:init", () => {
   Alpine.data("dtDensity", () => ({
@@ -32,6 +33,15 @@ document.addEventListener("alpine:init", () => {
       this.level = level;
       document.documentElement.dataset.dtDensity = level;
       dtWrite("dt-density", level);
+    },
+  }));
+
+  Alpine.data("dtBorder", () => ({
+    on: dtRead("dt-border", false) === true,
+    toggle() {
+      this.on = !this.on;
+      document.documentElement.dataset.dtBorder = this.on ? "on" : "off";
+      dtWrite("dt-border", this.on);
     },
   }));
 

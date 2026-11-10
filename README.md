@@ -67,7 +67,8 @@ another page). Read the docstrings in `django_datatable/datatable.py`.
 ```python
 DataTable(..., density_switch=True,   # S / M / L row height buttons, remembered in the browser
                 column_toggle=True,   # "Columns" menu to hide columns, remembered per table
-                sticky_header=True,   # column names stay visible while scrolling (box height: --dt-max-height, default 70vh)
+                sticky_header=True,   # on by default; pass False to turn off (box height: --dt-max-height, default 70vh)
+                border_toggle=True,   # a "Lines" button: cell lines on/off, remembered in the browser
                 bordered=True,        # lines around every cell
                 striped=False,        # turn off alternate row shading
                 page_sizes=(10, 25, 50))  # the "per page" choices

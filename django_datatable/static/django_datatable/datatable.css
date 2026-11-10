@@ -18,6 +18,7 @@ th[aria-sort="descending"] .sort-button::after { content: "\25BC"; opacity: 1; }
 [data-dt-density="compact"] .data-table :where(th, td) { padding-block: 0.15rem; font-size: 12px; }
 [data-dt-density="roomy"] .data-table :where(th, td) { padding-block: 0.85rem; }
 /* Table lines. */
+[data-dt-border="on"] .data-table :where(th, td),
 .data-table.dt-bordered :where(th, td) { border: 1px solid var(--color-base-300); }
 /* Column names stay in view; the table scrolls inside a box (change --dt-max-height to resize). */
 .dt-scroll-sticky { max-height: var(--dt-max-height, 70vh); overflow-y: auto; }

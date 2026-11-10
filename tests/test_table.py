@@ -118,20 +118,22 @@ def render_table(table):
 
 def test_new_options_are_off_by_default(things):
     html = render_table(make())
-    assert "dtDensity" not in html and "dtColumns" not in html
-    assert "dt-scroll-sticky" not in html and "dt-bordered" not in html
+    assert "dtDensity" not in html and "dtColumns" not in html and "dtBorder" not in html
+    assert "dt-bordered" not in html
+    assert "dt-scroll-sticky" in html  # sticky header is on unless turned off
+    assert "dt-scroll-sticky" not in render_table(make(sticky_header=False))
     assert "table-zebra" in html  # the old look is unchanged
 
 
 def test_look_options_add_their_classes(things):
-    html = render_table(make(striped=False, bordered=True, sticky_header=True))
+    html = render_table(make(striped=False, bordered=True))
     assert "dt-bordered" in html and "dt-scroll-sticky" in html
     assert "table-zebra" not in html
 
 
 def test_density_and_column_menu_show_when_turned_on(things):
-    html = render_table(make(density_switch=True, column_toggle=True))
-    assert "dtDensity" in html and "dtColumns('t')" in html
+    html = render_table(make(density_switch=True, column_toggle=True, border_toggle=True))
+    assert "dtDensity" in html and "dtBorder" in html and "dtColumns('t')" in html
     assert 'data-dt-col="qty"' in html  # lets the menu find each column
 
 
@@ -143,4 +145,4 @@ def test_custom_page_sizes(things):
     table = make("per_page=10", page_sizes=(5, 10))
     assert table.page_sizes == (5, 10) and table.per_page == 10
     assert make("per_page=50", page_sizes=(5, 10)).per_page == 5  # not allowed: first size
-    assert make().per_page == 25  # default list unchanged
+    assert make().per_page == 20 and make().page_sizes == (10, 20, 25, 50, 100, 200)

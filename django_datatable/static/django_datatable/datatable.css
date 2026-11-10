@@ -21,7 +21,7 @@ th[aria-sort="descending"] .sort-button::after { content: "\25BC"; opacity: 1; }
 [data-dt-border="on"] .data-table :where(th, td),
 .data-table.dt-bordered :where(th, td) { border: 1px solid var(--color-base-300); }
 /* Column names stay in view; the table scrolls inside a box (change --dt-max-height to resize). */
-.dt-scroll-sticky { max-height: var(--dt-max-height, 70vh); overflow-y: auto; }
+.dt-scroll-sticky { max-height: var(--dt-max-height, max(20rem, calc(100vh - 16rem))); overflow-y: auto; }
 .dt-scroll-sticky .data-table thead th { position: sticky; top: 0; z-index: 2; }
 .dt-scroll-sticky .data-table thead th.dt-sticky { z-index: 3; }
 /* The header cell with an open filter pop-up must sit above its neighbours. */

@@ -17,7 +17,7 @@ from .datatable import (
     table_response,
 )
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 __all__ = [
     "ACTIVE_INACTIVE", "BLANK", "CHOICE", "DATE", "NUMBER", "PAGE_SIZES", "TEXT", "YES_NO",

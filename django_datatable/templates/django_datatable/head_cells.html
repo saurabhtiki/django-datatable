@@ -3,7 +3,7 @@
   Pass lead_column=True when a narrow column (e.g. tick boxes, class dt-lead) comes first.
 {% endcomment %}
 {% for cell in table.header %}{% with column=cell.column %}
-  <th class="{% if forloop.first %}dt-sticky{% if lead_column %} dt-after-lead{% endif %}{% endif %}{% if column.align_right %} text-right{% endif %}" aria-sort="{{ cell.sort_state }}">
+  <th data-dt-col="{{ column.name }}" class="{% if forloop.first %}dt-sticky{% if lead_column %} dt-after-lead{% endif %}{% endif %}{% if column.align_right %} text-right{% endif %}" aria-sort="{{ cell.sort_state }}">
     <div class="inline-flex items-center gap-1" x-data="dtPopup" @click.outside="close()" @keydown.escape.window="close()" @resize.window="open && place()" @scroll.window.capture="open && place()">
       {% if column.sortable %}
         <a href="{{ cell.sort_url }}" hx-get="{{ cell.sort_url }}" hx-push-url="{{ table.push_url }}" class="sort-button" title="{{ cell.sort_tip }}">{{ column.label }}</a>

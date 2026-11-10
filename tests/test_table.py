@@ -109,3 +109,38 @@ def test_header_sticky_cell_sits_above_body_cells():
 
     css = Path(django_datatable.__file__).parent / "static/django_datatable/datatable.css"
     assert ".data-table thead .dt-sticky { z-index: 3; }" in css.read_text(encoding="utf-8")
+
+
+def render_table(table):
+    request = RequestFactory().get("/")
+    return render_to_string("tests/table.html", {"table": table}, request=request)
+
+
+def test_new_options_are_off_by_default(things):
+    html = render_table(make())
+    assert "dtDensity" not in html and "dtColumns" not in html
+    assert "dt-scroll-sticky" not in html and "dt-bordered" not in html
+    assert "table-zebra" in html  # the old look is unchanged
+
+
+def test_look_options_add_their_classes(things):
+    html = render_table(make(striped=False, bordered=True, sticky_header=True))
+    assert "dt-bordered" in html and "dt-scroll-sticky" in html
+    assert "table-zebra" not in html
+
+
+def test_density_and_column_menu_show_when_turned_on(things):
+    html = render_table(make(density_switch=True, column_toggle=True))
+    assert "dtDensity" in html and "dtColumns('t')" in html
+    assert 'data-dt-col="qty"' in html  # lets the menu find each column
+
+
+def test_loading_hint_hook_is_on_the_table_wrapper(things):
+    assert 'hx-indicator="this"' in render_table(make())
+
+
+def test_custom_page_sizes(things):
+    table = make("per_page=10", page_sizes=(5, 10))
+    assert table.page_sizes == (5, 10) and table.per_page == 10
+    assert make("per_page=50", page_sizes=(5, 10)).per_page == 5  # not allowed: first size
+    assert make().per_page == 25  # default list unchanged

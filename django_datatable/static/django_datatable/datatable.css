@@ -14,6 +14,23 @@ th[aria-sort="ascending"] .sort-button::after { content: "\25B2"; opacity: 1; }
 th[aria-sort="descending"] .sort-button::after { content: "\25BC"; opacity: 1; }
 .sort-button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
+/* Row height (S / M / L buttons set data-dt-density on <html>). */
+[data-dt-density="compact"] .data-table :where(th, td) { padding-block: 0.15rem; font-size: 12px; }
+[data-dt-density="roomy"] .data-table :where(th, td) { padding-block: 0.85rem; }
+/* Table lines. */
+.data-table.dt-bordered :where(th, td) { border: 1px solid var(--color-base-300); }
+/* Column names stay in view; the table scrolls inside a box (change --dt-max-height to resize). */
+.dt-scroll-sticky { max-height: var(--dt-max-height, 70vh); overflow-y: auto; }
+.dt-scroll-sticky .data-table thead th { position: sticky; top: 0; z-index: 2; }
+.dt-scroll-sticky .data-table thead th.dt-sticky { z-index: 3; }
+/* The header cell with an open filter pop-up must sit above its neighbours. */
+.dt-scroll-sticky .data-table thead th:has([aria-expanded="true"]) { z-index: 5; }
+/* Loading hint: while htmx fetches, the rows fade (after a short delay, so quick clicks don't flicker). */
+.dt-wrap .dt-scroll, .dt-wrap nav { transition: opacity 0.15s ease 0.12s; }
+.dt-wrap.htmx-request .dt-scroll, .dt-wrap.htmx-request nav { opacity: 0.45; pointer-events: none; }
+.dt-wrap.htmx-request { cursor: progress; }
+.data-table [hidden] { display: none !important; }
+
 /* Server-side table (django_datatable): funnel button, filter pop-up, fixed first column. */
 .dt-funnel { display: inline-flex; padding: 2px; border-radius: 4px; opacity: 0.7; cursor: pointer; }
 .dt-funnel:hover, .dt-funnel.is-on { opacity: 1; }

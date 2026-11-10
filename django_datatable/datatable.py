@@ -127,10 +127,30 @@ class DataTable:
         base_url="",
         noun="rows",
         keep=(),
-        default_per_page=PAGE_SIZES[0],
+        default_per_page=None,
         push_url=True,
         csv_params=(),
+        page_sizes=PAGE_SIZES,
+        striped=True,
+        bordered=False,
+        sticky_header=False,
+        density_switch=False,
+        column_toggle=False,
     ):
+        # Look and feel (all optional, nothing changes unless you turn it on):
+        #   striped / bordered  - alternate row shading, lines around every cell
+        #   sticky_header       - column names stay in view while a long table scrolls
+        #   density_switch      - Compact / Normal / Roomy buttons (remembered in the browser)
+        #   column_toggle       - a "Columns" menu to hide columns (remembered per table)
+        #   page_sizes          - the "per page" choices, e.g. (10, 25, 50)
+        self.striped = striped
+        self.bordered = bordered
+        self.sticky_header = sticky_header
+        self.density_switch = density_switch
+        self.column_toggle = column_toggle
+        self.page_sizes = tuple(page_sizes)
+        if default_per_page not in self.page_sizes:
+            default_per_page = self.page_sizes[0]
         self.params = params
         # Extra URL pairs on the CSV link only, e.g. ("part", "overdue") when one page has
         # several downloads and the view must tell them apart.
@@ -233,7 +253,7 @@ class DataTable:
 
     def _read_per_page(self) -> int:
         raw = self.params.get("per_page", "")
-        return int(raw) if raw.isdecimal() and int(raw) in PAGE_SIZES else self.default_per_page
+        return int(raw) if raw.isdecimal() and int(raw) in self.page_sizes else self.default_per_page
 
     # ---------- the rows ----------
 
@@ -437,10 +457,6 @@ class DataTable:
                 }
             )
         return links
-
-    @property
-    def page_sizes(self):
-        return PAGE_SIZES
 
     @cached_property
     def pager(self) -> list[dict]:

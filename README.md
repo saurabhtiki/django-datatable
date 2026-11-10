@@ -62,6 +62,18 @@ Other pieces: `RowsTable` (same table over a Python list of dicts), `rows_csv_re
 `Column(type=TEXT|CHOICE|NUMBER|DATE)`, `shortcuts=`, `keep=`, `push_url=False` (table inside
 another page). Read the docstrings in `django_datatable/datatable.py`.
 
+## Options (all optional)
+
+```python
+DataTable(..., density_switch=True,   # S / M / L row height buttons, remembered in the browser
+                column_toggle=True,   # "Columns" menu to hide columns, remembered per table
+                sticky_header=True,   # column names stay visible while scrolling (box height: --dt-max-height, default 70vh)
+                bordered=True,        # lines around every cell
+                striped=False,        # turn off alternate row shading
+                page_sizes=(10, 25, 50))  # the "per page" choices
+```
+Colours follow your DaisyUI theme. Rows fade while a click is loading (always on).
+
 ## Updating this package
 
 1. Change the code here, add/adjust a test in `tests/`, run `uv run pytest`.

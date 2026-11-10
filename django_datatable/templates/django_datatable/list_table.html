@@ -4,11 +4,11 @@
   Optional: actions_heading (adds a last “Actions” column for buttons).
   Each page wraps this in its own partial so htmx can redraw only the table.
 {% endcomment %}
-<div id="{{ table.table_id }}" hx-target="#{{ table.table_id }}" hx-swap="outerHTML">
+<div id="{{ table.table_id }}" class="dt-wrap" hx-target="#{{ table.table_id }}" hx-swap="outerHTML" hx-indicator="this">
   {% if table.has_any_rows %}
     {% include "django_datatable/toolbar.html" %}
-    <div class="overflow-x-auto rounded-box bg-base-100">
-      <table class="table table-sm table-zebra data-table">
+    <div class="dt-scroll overflow-x-auto rounded-box bg-base-100{% if table.sticky_header %} dt-scroll-sticky{% endif %}">
+      <table class="table table-sm data-table{% if table.striped %} table-zebra{% endif %}{% if table.bordered %} dt-bordered{% endif %}">
         <thead><tr>{% include "django_datatable/head_cells.html" %}{% if actions_heading %}<th class="text-right">Actions</th>{% endif %}</tr></thead>
         <tbody>
           {% for row in table.page %}

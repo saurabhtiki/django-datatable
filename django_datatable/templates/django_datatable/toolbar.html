@@ -18,6 +18,29 @@
     </div>
   {% endif %}
   <span class="flex-1"></span>
+  {% if table.density_switch %}
+    <div x-data="dtDensity" class="join" role="group" aria-label="Row height">
+      <button type="button" class="join-item btn btn-sm" :class="level === 'compact' && 'btn-active btn-primary'" @click="set('compact')" title="Compact rows: more rows on the screen">S</button>
+      <button type="button" class="join-item btn btn-sm" :class="level === 'normal' && 'btn-active btn-primary'" @click="set('normal')" title="Normal rows">M</button>
+      <button type="button" class="join-item btn btn-sm" :class="level === 'roomy' && 'btn-active btn-primary'" @click="set('roomy')" title="Roomy rows: easier to read">L</button>
+    </div>
+  {% endif %}
+  {% if table.column_toggle %}
+    <div x-data="dtColumns('{{ table.table_id }}')" class="relative" @click.outside="open = false" @keydown.escape.window="open = false">
+      <button type="button" class="btn btn-sm btn-outline btn-primary" @click="open = !open" :aria-expanded="open" title="Choose which columns to show">Columns <span x-show="hidden.length" x-cloak class="badge badge-sm badge-primary" x-text="'−' + hidden.length"></span></button>
+      <div x-show="open" x-cloak class="card card-sm absolute right-0 z-30 mt-1 w-56 bg-base-100 text-base-content shadow-xl">
+        <div class="card-body gap-1">
+          {% for column in table.columns %}
+            <label class="flex cursor-pointer items-center gap-2 text-sm">
+              <input type="checkbox" class="checkbox checkbox-sm" :checked="!hidden.includes('{{ column.name }}')" @change="toggle('{{ column.name }}')">
+              <span>{{ column.label }}</span>
+            </label>
+          {% endfor %}
+          <button type="button" class="link link-primary mt-1 self-start text-sm" x-show="hidden.length" x-cloak @click="showAll()" title="Show every column again">Show all</button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
   <span class="tooltip tooltip-left" data-tip="{{ table.csv_tip }}">
     <a href="{{ table.csv_url }}" class="btn btn-sm btn-square btn-outline btn-primary" aria-label="Download CSV" download>
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>

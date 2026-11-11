@@ -134,11 +134,11 @@ class DataTable:
         striped=True,
         bordered=False,
         sticky_header=True,
-        density_switch=False,
+        density_switch=True,
         column_toggle=False,
-        border_toggle=False,
+        border_toggle=True,
     ):
-        # Look and feel (all optional, nothing changes unless you turn it on):
+        # Look and feel (all optional; sticky_header, density_switch and border_toggle are on):
         #   striped / bordered  - alternate row shading, lines around every cell
         #   sticky_header       - column names stay in view while a long table scrolls
         #   density_switch      - Compact / Normal / Roomy buttons (remembered in the browser)

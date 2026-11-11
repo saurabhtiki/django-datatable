@@ -2,6 +2,10 @@
 
 Newest first. Bump `version` in `pyproject.toml` and `django_datatable/__init__.py` for each release, then `git tag vX.Y.Z`.
 
+## 0.4.0
+- The S / M / L (`density_switch`) and Lines (`border_toggle`) buttons are now on by default.
+  Pass `False` to hide them.
+
 ## 0.3.1
 - Sticky header: the table box now fits the screen (height minus 16rem), so it scrolls inside and the header stays in view even with only 20 rows.
 

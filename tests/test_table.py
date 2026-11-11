@@ -118,7 +118,10 @@ def render_table(table):
 
 def test_new_options_are_off_by_default(things):
     html = render_table(make())
-    assert "dtDensity" not in html and "dtColumns" not in html and "dtBorder" not in html
+    assert "dtColumns" not in html  # the Columns menu is off unless turned on
+    assert "dtDensity" in html and "dtBorder" in html  # S/M/L and Lines are on by default
+    hidden = render_table(make(density_switch=False, border_toggle=False))
+    assert "dtDensity" not in hidden and "dtBorder" not in hidden
     assert "dt-bordered" not in html
     assert "dt-scroll-sticky" in html  # sticky header is on unless turned off
     assert "dt-scroll-sticky" not in render_table(make(sticky_header=False))

@@ -65,10 +65,10 @@ another page). Read the docstrings in `django_datatable/datatable.py`.
 ## Options (all optional)
 
 ```python
-DataTable(..., density_switch=True,   # S / M / L row height buttons, remembered in the browser
+DataTable(..., density_switch=False,  # on by default: S / M / L row height buttons, remembered in the browser
                 column_toggle=True,   # "Columns" menu to hide columns, remembered per table
                 sticky_header=True,   # on by default; pass False to turn off (box height: --dt-max-height, default: screen height minus 16rem)
-                border_toggle=True,   # a "Lines" button: cell lines on/off, remembered in the browser
+                border_toggle=False,  # on by default: a "Lines" button for cell lines, remembered in the browser
                 bordered=True,        # lines around every cell
                 striped=False,        # turn off alternate row shading
                 page_sizes=(10, 25, 50))  # the "per page" choices
